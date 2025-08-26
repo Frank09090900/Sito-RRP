@@ -209,37 +209,9 @@ a { color: var(--text); text-decoration: none; }
 .media.forze { background-image: url("immagini/forze.jpg"); }
 .media.imprenditore { background-image: url("immagini/imprenditore.jpg"); }
 
-
 /* ============================= */
-/* VARIABILI PRINCIPALI         */
+/* NAV FIX                       */
 /* ============================= */
-:root {
-  --accent: #f4c430;  /* giallo dorato */
-  --muted: #aaa;      /* colore testo menu normale */
-  --text: #ffffff;       /* colore testo card normale */
-}
-
-/* ============================= */
-/* NAV FIX                      */
-/* ============================= */
-.nav .brand .dot {
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 6px 2px color-mix(in oklab, var(--accent) 55%, transparent);
-}
-
-.nav .links a {
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;
-  color: var(--muted);
-  transition: 0.25s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .nav .links a:hover {
   color: var(--accent);
   text-shadow: 0 0 6px rgba(73, 55, 1, 0.6);
@@ -249,24 +221,6 @@ a { color: var(--text); text-decoration: none; }
 /* ============================= */
 /* CARD (Ruoli)                  */
 /* ============================= */
-.role {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-.role:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 0 25px rgba(244,196,48,0.25);
-}
-
-/* titoli e testi nelle card */
-.role h4, .role p {
-  transition: color 0.25s ease, text-shadow 0.25s ease;
-}
-
-.role:hover h4 {
-  color: var(--accent);
-  text-shadow: 0 0 8px rgba(244,196,48,0.5);
-}
-
 .role:hover p {
   color: var(--text);
   text-shadow: 0 0 6px rgba(244,196,48,0.4);
@@ -275,9 +229,6 @@ a { color: var(--text); text-decoration: none; }
 /* ============================= */
 /* BOTTONI                       */
 /* ============================= */
-.btn {
-  transition: transform 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
-}
 .btn:hover {
   transform: translateY(-2px) scale(1.03);
   color: var(--accent);
@@ -287,13 +238,135 @@ a { color: var(--text); text-decoration: none; }
 /* ============================= */
 /* TESTI GENERICI CON LINK       */
 /* ============================= */
-a, button {
-  transition: color 0.25s ease, text-shadow 0.25s ease;
-}
-
 a:hover, button:hover {
   color: var(--accent);
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
 }
 
+/* ============================= */
+/* LOGO NAVBAR FIX               */
+/* ============================= */
+.nav .brand img {
+  max-height: 100px;   /* regola tu l’altezza */
+  width: auto;
+  display: block;
+}
 
+/* ============================= */
+/* MOBILE FIX                    */
+/* ============================= */
+@media (max-width: 600px) {
+  /* Navbar */
+  .nav .wrap {
+    flex-direction: column;
+    align-items: center;
+    padding: .6rem var(--pad);
+  }
+  .nav .brand {
+    justify-content: center;
+  }
+  .nav .brand img {
+    max-height: 32px; /* più piccolo su mobile */
+  }
+
+  /* Hero */
+  .hero {
+    padding: 3rem 0 1.5rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 6vw, 2.4rem);
+  }
+  .hero .subtitle {
+    font-size: .95rem;
+    max-width: 90%;
+    margin-inline: auto;
+  }
+  .hero .actions {
+    justify-content: center;
+  }
+
+  /* Griglie */
+  .features,
+  .roles,
+  .store,
+  .media-block,
+  .stats {
+    grid-template-columns: 1fr !important; /* forza 1 colonna */
+    gap: 1.5rem;
+  }
+
+  /* Card & Product spacing */
+  .card, .role, .product, .media-block .aside, .media-block .video {
+    padding: 1rem;
+    border-radius: var(--radius);
+  }
+
+  /* CTA block */
+  .cta .wrap {
+    flex-direction: column;
+    text-align: center;
+  }
+  .cta h2 {
+    font-size: 1.3rem;
+  }
+
+   }
+
+   /* Hamburger base */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+.hamburger span {
+  width: 24px;
+  height: 3px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all .3s ease;
+}
+
+/* Effetto X quando aperto */
+body.nav-open .hamburger span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+body.nav-open .hamburger span:nth-child(2) {
+  opacity: 0;
+}
+body.nav-open .hamburger span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Links menu mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+  .links {
+    position: absolute;
+    top: var(--nav-height);
+    right: 0;
+    left: 0;
+    background: var(--surface);
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+
+    /* Animazione iniziale */
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all .4s ease;
+  }
+
+  /* Quando nav aperta */
+  body.nav-open .links {
+    max-height: 300px; /* spazio sufficiente */
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
