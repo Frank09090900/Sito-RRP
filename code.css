@@ -1,0 +1,299 @@
+/*
+  Roma RP — Theme CSS (inspired by https://romarp.nicepage.io)
+  Focus: dark UI, bold hero typography, vibrant accent (gold), supporting red/purple, soft glows.
+*/
+
+/* 1) CSS Variables (Design Tokens) */
+:root {
+  --bg: #0a0b0f;
+  --surface: #0f1117;
+  --surface-2: #141826;
+  --border: #202532;
+  --text: #f5f7fb;
+  --muted: #adb7c9;
+  --accent: #f4c430;
+  --accent-2: #e73f3f;
+  --accent-3: #6c5ce7;
+  --success: #27ae60;
+  --warning: #f39c12;
+  --danger:  #ff4d4d;
+
+  --ring: 0 0 0 3px color-mix(in oklab, var(--accent) 35%, transparent);
+  --shadow-soft: 0 10px 30px rgba(0,0,0,.35);
+  --shadow-card: 0 12px 24px rgba(0,0,0,.45);
+
+  --font-sans: "Poppins", "Montserrat", "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-wide: "Oswald", "Poppins", system-ui, sans-serif;
+  --leading: 1.6;
+
+  --radius: 18px;
+  --radius-lg: 22px;
+  --pad: 1.2rem;
+  --pad-lg: 2rem;
+  --maxw: 1200px;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: radial-gradient(1200px 800px at 75% -10%, rgba(244,196,48,.15), transparent 60%),
+              radial-gradient(1200px 800px at 10% 110%, rgba(108,92,231,.12), transparent 60%),
+              var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: var(--leading);
+}
+img { max-width: 100%; display: block; }
+a { color: var(--text); text-decoration: none; }
+
+.container { width: min(100%, var(--maxw)); margin-inline: auto; padding: 0 var(--pad); }
+
+/* 3) Top Nav */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: saturate(130%) blur(10px);
+  background: linear-gradient(to right, rgba(10,11,15,.7), rgba(20,24,38,.6));
+  border-bottom: 1px solid var(--border);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem var(--pad); }
+.nav .brand { display:flex; align-items:center; gap:.6rem; font-weight: 700; letter-spacing: .5px; }
+.nav .brand .dot { 
+  width: .45rem; 
+  height: .45rem; 
+  border-radius: 50%; 
+  background: var(--accent); 
+  box-shadow: 0 0 6px 2px color-mix(in oklab, var(--accent) 55%, transparent); 
+}
+.nav .links { display:flex; gap: 1rem; }
+.nav .links a { 
+  padding: .35rem .9rem; 
+  border-radius: 999px; 
+  color: var(--muted); 
+  transition: .25s ease; 
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+}
+.nav .links a:hover, .nav .links a[aria-current="page"] { color: var(--text); background: color-mix(in oklab, var(--accent) 12%, transparent); }
+.nav .cta { padding: .6rem 1rem; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); font-weight: 600; transition: .25s ease; }
+.nav .cta:hover { background: var(--accent); color: #111; box-shadow: var(--ring); }
+
+/* 4) Hero */
+.hero { position: relative; overflow: hidden; padding: 6rem 0 3rem; }
+.hero h1 {
+  font-family: var(--font-wide);
+  text-transform: uppercase;
+  font-size: clamp(2.6rem, 5vw + .5rem, 5rem);
+  letter-spacing: 1px;
+  margin: 0 0 .5rem;
+  line-height: 1.05;
+  background: linear-gradient(180deg, var(--text) 0%, #dfe6f5 40%, color-mix(in oklab, var(--accent) 30%, #dfe6f5) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero .subtitle { color: var(--muted); font-size: 1.05rem; max-width: 60ch; }
+.hero .actions { display:flex; gap: .8rem; flex-wrap: wrap; margin-top: 1.2rem; }
+
+/* Buttons */
+.btn { --_bg: var(--surface-2); --_fg: var(--text); position: relative; display:inline-flex; align-items:center; gap:.5rem; padding: .9rem 1.2rem; border-radius: 14px; border: 1px solid var(--border); background: var(--_bg); color: var(--_fg); font-weight: 600; transition: .25s ease; box-shadow: var(--shadow-soft); }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 14px 38px rgba(0,0,0,.5); }
+.btn.primary { --_bg: linear-gradient(180deg, color-mix(in oklab, var(--accent) 75%, #fff), var(--accent)); --_fg: #111; border: none; }
+.btn.ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.btn.outline { background: transparent; border: 1px solid color-mix(in oklab, var(--accent) 40%, var(--border)); color: var(--accent); }
+.btn.outline:hover { background: color-mix(in oklab, var(--accent) 18%, transparent); box-shadow: var(--ring); }
+
+/* 5) Stat Pills */
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; margin: 2rem 0; }
+.stat { background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); border: 1px solid var(--border); border-radius: 20px; padding: 1rem 1.2rem; box-shadow: var(--shadow-card); }
+.stat .value { font-size: clamp(1.8rem, 3vw + .2rem, 2.6rem); font-weight: 800; letter-spacing: .5px; }
+.stat .label { color: var(--muted); margin-top: .1rem; }
+
+/* 6) Feature Cards */
+.features { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; margin: 2.5rem 0; }
+.card { background: linear-gradient(180deg, var(--surface), var(--surface-2)); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--pad-lg); box-shadow: var(--shadow-card); transition: .25s ease; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,.6); }
+.card h3 { margin: 0 0 .5rem; font-size: 1.4rem; }
+.card p { margin: 0; color: var(--muted); }
+
+/* 7) Roles Carousel */
+.roles { margin: 3rem 0; display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; }
+.role { position: relative; overflow: hidden; border-radius: var(--radius-lg); background: #0c0f18; border: 1px solid var(--border); transition: transform .25s ease, box-shadow .25s ease; }
+.role .media { aspect-ratio: 16/9; background: linear-gradient(90deg, rgba(244,196,48,.25), transparent 40%), linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35)); }
+.role .body { padding: 1rem 1.1rem 1.3rem; }
+.role h4 { margin: 0 0 .35rem; font-size: 1.2rem; transition: color .25s ease, text-shadow .25s ease; }
+.role p { margin: 0; color: var(--muted); transition: color .25s ease; }
+.role:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 0 25px rgba(244,196,48,.25); }
+.role:hover h4 { color: var(--accent); text-shadow: 0 0 8px rgba(244,196,48,.5); }
+.role:hover p { color: var(--text); }
+
+/* 8) Store Grid */
+.store { display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 1rem; }
+.product { background: linear-gradient(180deg, var(--surface), var(--surface-2)); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-card); display:flex; flex-direction:column; }
+.product .thumb { aspect-ratio: 1/1; background: #111; }
+.product .info { padding: 1rem; display:grid; gap:.4rem; }
+.product .name { font-weight: 700; }
+.product .price { color: var(--accent); font-weight: 700; }
+.product .buy { margin: .6rem 1rem 1rem; }
+
+/* 9) Trailer / Media Section */
+.media-block { margin: 3rem 0; display:grid; grid-template-columns: 1.2fr .8fr; gap: 1.2rem; }
+.media-block .video, .media-block .aside { background: linear-gradient(180deg, var(--surface), var(--surface-2)); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--pad-lg); box-shadow: var(--shadow-card); }
+.media-block .aside h3 { margin-top: 0; }
+
+/* 10) CTA Stripes */
+.cta { position: relative; margin: 4rem 0 2rem; border: 1px solid color-mix(in oklab, var(--accent) 25%, var(--border)); border-radius: var(--radius-lg); overflow: hidden; background:
+  linear-gradient(135deg, color-mix(in oklab, var(--accent) 12%, transparent), transparent 40%),
+  linear-gradient(0deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+}
+.cta .wrap { padding: 2rem; display:flex; align-items:center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.cta h2 { margin: 0; font-size: clamp(1.6rem, 1.6vw + .5rem, 2.2rem); }
+
+/* 11) Footer */
+.footer { margin-top: 3rem; padding: 2rem 0; border-top: 1px solid var(--border); color: var(--muted); }
+.footer a { color: var(--text); opacity: .9; }
+.footer a:hover { opacity: 1; }
+
+/* 12) Forms */
+.form { display:grid; gap: .8rem; }
+.input, .textarea {
+  width: 100%;
+  padding: .9rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #0c0f15;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.input:focus, .textarea:focus { border-color: color-mix(in oklab, var(--accent) 50%, var(--border)); box-shadow: var(--ring); }
+.textarea { min-height: 160px; resize: vertical; }
+
+/* 13) Badges */
+.badge { display:inline-flex; align-items:center; gap:.5rem; padding: .4rem .7rem; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,.03); color: var(--muted); font-weight: 600; font-size: .85rem; }
+.badge.accent { border-color: color-mix(in oklab, var(--accent) 35%, var(--border)); color: var(--accent); background: color-mix(in oklab, var(--accent) 15%, transparent); }
+
+/* 14) Utilities */
+.grid-2 { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+.grid-3 { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; }
+.grid-4 { display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 1rem; }
+.center { display:grid; place-items:center; }
+
+/* 15) Responsive */
+@media (max-width: 1100px) {
+  .features { grid-template-columns: 1fr 1fr; }
+  .roles { grid-template-columns: 1fr 1fr; }
+  .store { grid-template-columns: 1fr 1fr 1fr; }
+  .media-block { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .stats { grid-template-columns: 1fr; }
+  .features { grid-template-columns: 1fr; }
+  .roles { grid-template-columns: 1fr; }
+  .store { grid-template-columns: 1fr 1fr; }
+  .nav .links { display:none; }
+  .hero { padding: 4.5rem 0 2rem; }
+}
+@media (max-width: 480px) {
+  .store { grid-template-columns: 1fr; }
+}
+
+/* Media Images for roles */
+.media {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px 12px 0 0;
+  background-size: cover;
+  background-position: center;
+}
+.media.criminale { background-image: url("immagini/criminale.jpg"); }
+.media.forze { background-image: url("immagini/forze.jpg"); }
+.media.imprenditore { background-image: url("immagini/imprenditore.jpg"); }
+
+
+/* ============================= */
+/* VARIABILI PRINCIPALI         */
+/* ============================= */
+:root {
+  --accent: #f4c430;  /* giallo dorato */
+  --muted: #aaa;      /* colore testo menu normale */
+  --text: #ffffff;       /* colore testo card normale */
+}
+
+/* ============================= */
+/* NAV FIX                      */
+/* ============================= */
+.nav .brand .dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px 2px color-mix(in oklab, var(--accent) 55%, transparent);
+}
+
+.nav .links a {
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  color: var(--muted);
+  transition: 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav .links a:hover {
+  color: var(--accent);
+  text-shadow: 0 0 6px rgba(73, 55, 1, 0.6);
+  transform: translateY(-2px);
+}
+
+/* ============================= */
+/* CARD (Ruoli)                  */
+/* ============================= */
+.role {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.role:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 0 25px rgba(244,196,48,0.25);
+}
+
+/* titoli e testi nelle card */
+.role h4, .role p {
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.role:hover h4 {
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(244,196,48,0.5);
+}
+
+.role:hover p {
+  color: var(--text);
+  text-shadow: 0 0 6px rgba(244,196,48,0.4);
+}
+
+/* ============================= */
+/* BOTTONI                       */
+/* ============================= */
+.btn {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+}
+.btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  color: var(--accent);
+  box-shadow: 0 0 12px rgba(244,196,48,0.4);
+}
+
+/* ============================= */
+/* TESTI GENERICI CON LINK       */
+/* ============================= */
+a, button {
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+a:hover, button:hover {
+  color: var(--accent);
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+
